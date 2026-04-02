@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body.signup-page {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .signup-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 35px;
+            border-radius: 14px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .signup-card h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #3f3f7a;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 28px;
+        }
+
+        .signup-card form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .signup-card input[type="text"],
+        .signup-card input[type="password"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #dbe3f7;
+            border-radius: 9px;
+            margin: 10px 0;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.25s ease;
+        }
+
+        .signup-card input[type="text"]:focus,
+        .signup-card input[type="password"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        .signup-card button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            width: 60%;
+        }
+
+        .signup-card button:hover {
+            opacity: 0.9;
+        }
+
+        .signup-card a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-card .small-text {
+            margin-top: 18px;
+            color: #6f6f94;
+        }
+    </style>
+</head>
+<body class="signup-page">
+
+<div class="signup-card">
+    <h2>Create Account</h2>
+
+    <form method="POST">
+        <input type="text" name="username" placeholder="Enter Username" required>
+        <input type="password" name="password" placeholder="Enter Password" required>
+        <button type="submit">Signup</button>
+    </form>
+
+    <p class="small-text">Already have account? <a href="/">Login</a></p>
+</div>
+
+</body>
+</html>

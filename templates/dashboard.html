@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 35px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 300px;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #3f3f7a;
+        }
+
+        a {
+            display: block;
+            text-decoration: none;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            opacity: 0.9;
+        }
+
+        .logout {
+            background: #ff4d4d;
+        }
+
+        .logout:hover {
+            background: #e60000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-card">
+
+<h2>Dashboard</h2>
+
+<a href="/upload">Upload Secure Data</a><br><br>
+<a href="/view">View Stored Data</a><br><br>
+<a href="/recover">Recover Backup Data</a><br><br>
+
+<a href="/logout" class="logout">Logout</a>
+
+</div>
+
+</body>
+</html>

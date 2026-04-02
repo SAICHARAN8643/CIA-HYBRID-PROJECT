@@ -1,0 +1,157 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Form Styles */
+form {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* File Input Styles */
+input[type="file"] {
+    display: block;
+    margin: 20px auto;
+    padding: 15px;
+    border: 2px dashed #667eea;
+    border-radius: 10px;
+    background: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type="file"]:hover {
+    border-color: #764ba2;
+    background: #e9ecef;
+}
+
+/* Button Styles */
+button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Signup + View Page Styles */
+.signup-page,
+.view-page {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-card,
+.view-card {
+    background: rgba(255, 255, 255, 0.94);
+    padding: 28px 32px;
+    border-radius: 16px;
+    max-width: 900px;
+    width: 100%;
+    box-shadow: 0 20px 50px rgba(15, 15, 50, 0.2);
+}
+
+.signup-card h2,
+.view-card h2 {
+    margin-top: 0;
+    color: #3f3f7a;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 18px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+}
+
+table th,
+table td {
+    border: 1px solid #d7dff4;
+    padding: 12px 14px;
+    text-align: left;
+}
+
+table th {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    font-weight: 700;
+    border-color: #5759bf;
+}
+
+table tr:nth-child(even) {
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.small-text {
+    font-size: 0.95rem;
+    color: #5f5f8a;
+    text-align: center;
+}
+
+.small-text a,
+.view-card a,
+.signup-card a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.small-text a:hover,
+.view-card a:hover,
+.signup-card a:hover {
+    text-decoration: underline;
+}
+

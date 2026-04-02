@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Data</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .view-page {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .view-card {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 900px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #3f3f7a;
+        }
+
+        .table-wrap {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #6a5acd;
+            color: white;
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        /* 🔥 IMPORTANT: Show full text properly */
+        td:nth-child(2) {
+            white-space: pre-wrap;   /* keeps line breaks */
+            word-wrap: break-word;   /* breaks long text */
+            max-width: 300px;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .small-text {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .small-text a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="view-page">
+
+<div class="view-card">
+    <h2>Stored Data</h2>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Decrypted Data</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+    {% for item in data %}
+    <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.data }}</td>
+        <td>{{ item.status }}</td>
+    </tr>
+    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <p class="small-text"><a href="/dashboard">Back to Dashboard</a></p>
+</div>
+
+</body>
+</html>
