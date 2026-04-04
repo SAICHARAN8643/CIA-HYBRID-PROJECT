@@ -5,5 +5,5 @@ def connect_db():
         host="localhost",
         user="root",
         password="",
-        database="cia_security"
+        database="cia_security_new"   # ✅ updated database name
     )
