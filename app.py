@@ -58,7 +58,7 @@ def signup():
         existing_user = cursor.fetchone()
 
         if existing_user:
-            return "User already exists! Please login."
+            return render_template('signup.html', error_message="⚠️ User already exists! Please login.")
 
         cursor.execute(
             "INSERT INTO users (username, password) VALUES (%s, %s)",
@@ -68,7 +68,7 @@ def signup():
 
         log_action(f"New user registered: {username}")
 
-        return "✅ Account created successfully! Go to login."
+        return render_template('signup.html', success_message="✅ Account created successfully! Go to login.")
 
     return render_template('signup.html')
 
@@ -79,7 +79,23 @@ def dashboard():
     if 'user' not in session:
         return redirect('/')
 
-    return render_template('dashboard.html')
+    db = connect_db()
+    cursor = db.cursor()
+    user_id = session.get('user_id')
+
+    # Fetch recent files
+    cursor.execute("SELECT id, encrypted_data FROM files WHERE user_id=%s ORDER BY id DESC LIMIT 5", (user_id,))
+    recent_files = cursor.fetchall()
+
+    dashboard_files = []
+    for row in recent_files:
+        try:
+            decrypted = decrypt_data(row[1].encode())
+        except:
+            decrypted = "[Encrypted Content]"
+        dashboard_files.append({"id": row[0], "data": decrypted})
+
+    return render_template('dashboard.html', recent_files=dashboard_files, username=session.get('user'))
 
 
 # 📤 Upload Data

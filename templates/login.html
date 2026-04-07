@@ -7,77 +7,102 @@
             font-family: Arial, sans-serif;
             margin: 0;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             height: 100vh;
             overflow: hidden;
+            background: url('/static/images/particle_padlock.png') no-repeat center center fixed;
+            background-size: cover;
         }
 
-        /* 🎥 Background Video */
-        #bg-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -2;
-        }
 
-        /* 🔲 Overlay (for readability) */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: -1;
-        }
+
+
 
         .container {
-            background: white;
-            padding: 30px 25px;
-            border-radius: 8px;
-            width: 320px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background: rgba(10, 20, 35, 0.75);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            padding: 40px 35px;
+            border-radius: 14px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 18px 40px rgba(0, 229, 255, 0.2);
             text-align: center;
             z-index: 1;
+            margin-left: 25vw;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                justify-content: center;
+            }
+            .container {
+                margin-left: 0;
+            }
         }
 
         h2 {
             margin-bottom: 20px;
-            color: #333;
+            color: #00e5ff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 28px;
         }
 
         input {
             width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
+            padding: 12px 14px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 9px;
+            font-size: 16px;
+            color: black;
+            font-weight: bold;
+            box-sizing: border-box;
+            transition: all 0.25s ease;
+        }
+
+        input::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+            font-weight: normal;
         }
 
         input:focus {
-            border-color: #6a5acd;
+            border-color: #00e5ff;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.8);
             outline: none;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        /* Fix for Browser Autofill */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.85) inset !important;
+            -webkit-text-fill-color: black !important;
+            transition: background-color 5000s ease-in-out 0s;
         }
 
         button {
             width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            background-color: #6a5acd;
-            color: white;
+            padding: 12px 25px;
+            margin-top: 20px;
+            background-color: #00e5ff;
+            color: #001220;
+            font-weight: bold;
             border: none;
-            border-radius: 5px;
-            font-size: 15px;
+            border-radius: 25px;
+            font-size: 16px;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         button:hover {
-            background-color: #5941c2;
+            background-color: #00b8e6;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.8);
         }
 
         .footer {
@@ -86,30 +111,28 @@
 
         .footer p {
             margin: 5px 0;
-            color: #333;
+            color: #ccc;
         }
 
         .footer a {
             text-decoration: none;
-            color: #6a5acd;
+            color: #00e5ff;
             font-weight: bold;
+            transition: color 0.3s ease;
         }
 
         .footer a:hover {
             text-decoration: underline;
+            color: #00b8e6;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.7);
         }
     </style>
 </head>
 <body>
 
-<!-- 🎥 VIDEO BACKGROUND -->
-<video id="bg-video" autoplay muted loop playsinline>
-    <source src="{{ url_for('static', filename='video/vecteezy_cyber-security-concept-shield-with-keyhole-icon-on-digital_4827654.mp4') }}" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
 
-<!-- 🔲 DARK OVERLAY -->
-<div class="overlay"></div>
+
+
 
 <div class="container">
     <form method="POST">

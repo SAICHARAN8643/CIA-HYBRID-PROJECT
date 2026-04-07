@@ -1,70 +1,475 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <!-- Use FontAwesome for Cybersecurity Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #817be1, #514a99);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 20px;
+            box-sizing: border-box;
         }
 
-        .dashboard-card {
-            background: white;
-            padding: 35px 40px;
+        .dashboard-wrapper {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Reusable Card Style */
+        .white-card {
+            background: rgba(245, 247, 250, 0.95);
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 1px solid white;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.8), 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Top Header */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 30px;
+            position: relative;
+        }
+
+        .shield-icon {
+            font-size: 36px;
+            color: #213555;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            left: 30px;
+        }
+
+        .title-group {
             text-align: center;
-            width: 300px;
         }
 
-        h2 {
-            margin-bottom: 25px;
-            color: #3f3f7a;
+        .title-group h1 {
+            margin: 0;
+            font-size: 26px;
+            color: #1a233a;
+            letter-spacing: 1px;
+            font-weight: 800;
         }
 
-        a {
-            display: block;
-            text-decoration: none;
-            margin: 10px 0;
-            padding: 12px;
-            border-radius: 6px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        .title-group p {
+            margin: 5px 0 0 0;
+            font-size: 15px;
+            color: #555;
+            letter-spacing: 1px;
+        }
+
+        /* Content Area */
+        .content-area {
+            display: flex;
+            gap: 20px;
+        }
+
+        .side-panel {
+            width: 25%;
+            min-height: 400px;
+            position: relative;
+        }
+
+        .side-panel-decor {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 2px dashed rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+        }
+
+        /* 4 Panel Grid */
+        .cards-grid {
+            width: 75%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .data-card {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card-banner {
+            background: linear-gradient(90deg, #6c5ce7, #a29bfe);
             color: white;
+            border-radius: 8px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
             font-weight: bold;
-            transition: 0.3s;
+            box-shadow: 0 6px 15px rgba(108, 92, 231, 0.4);
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
-        a:hover {
-            opacity: 0.9;
+        .card-banner i {
+            margin-right: 15px;
+            font-size: 22px;
         }
 
-        .logout {
-            background: #ff4d4d;
+        /* Specific Elements */
+        .progress-bar {
+            height: 10px;
+            background: #eef1f6;
+            border-radius: 5px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 8px;
         }
 
-        .logout:hover {
-            background: #e60000;
+        .progress-text {
+            text-align: right;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .drop-zone {
+            border: 2px dashed #b2bec3;
+            border-radius: 8px;
+            padding: 25px 10px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.6);
+            color: #636e72;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .drop-zone:hover {
+            border-color: #6c5ce7;
+            background: white;
+        }
+
+        .drop-zone i {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #6c5ce7;
+        }
+
+        .upload-input-group {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .upload-input-group input[type="file"],
+        .upload-input-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #dcdde1;
+            border-radius: 6px;
+            background: white;
+            font-size: 13px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .upload-input-group textarea {
+            height: 40px;
+            resize: none;
+        }
+
+        .btn-upload {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .btn-upload:hover {
+            background: #5a4bcf;
+        }
+
+        .section-label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #1a233a;
+            margin-bottom: 12px;
+        }
+
+        .file-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .file-list li {
+            padding: 10px 15px;
+            font-size: 14px;
+            color: #444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border: 1px solid #eee;
+        }
+
+        .file-list li i.fa-file {
+            margin-right: 12px;
+            color: #a29bfe;
+            font-size: 16px;
+        }
+
+        .file-list li i.fa-ellipsis {
+            color: #b2bec3;
+            cursor: pointer;
+        }
+
+        .file-list li i.fa-ellipsis:hover {
+            color: #2d3436;
+        }
+
+        .dropdown-select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 6px;
+            border: 1px solid #dcdde1;
+            color: #333;
+            outline: none;
+            cursor: pointer;
+            background: white;
+            margin-bottom: 20px;
+        }
+
+        .recover-btn {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .recover-btn:hover {
+            background: #5a4bcf;
+        }
+
+        .logout-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-logout {
+            background: linear-gradient(90deg, #ff4757, #ff6b81);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.4);
+            text-decoration: none;
+            margin-bottom: 15px;
+            transition: transform 0.2s;
+        }
+
+        .btn-logout:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-logout i {
+            margin-right: 12px;
+            font-size: 22px;
+        }
+
+        .session-text {
+            color: #888;
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .content-area {
+                flex-direction: column;
+            }
+
+            .side-panel {
+                width: 100%;
+                min-height: 100px;
+            }
+
+            .cards-grid {
+                width: 100%;
+                grid-template-columns: 1fr;
+            }
+
+            .shield-icon {
+                position: static;
+                margin-right: 15px;
+                background: transparent;
+                box-shadow: none;
+                border: none;
+            }
+
+            .top-bar {
+                justify-content: center;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<div class="dashboard-card">
+    <!-- Main Wrapper -->
+    <div class="dashboard-wrapper">
 
-<h2>Dashboard</h2>
+        <!-- Header -->
+        <div class="white-card top-bar">
+            <div class="shield-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="title-group">
+                <h1>DASHBOARD</h1>
+            </div>
+        </div>
 
-<a href="/upload">Upload Secure Data</a><br><br>
-<a href="/view">View Stored Data</a><br><br>
-<a href="/recover">Recover Backup Data</a><br><br>
+        <!-- Content Area -->
+        <div class="content-area">
 
-<a href="/logout" class="logout">Logout</a>
+            <!-- Left Side Empty Panel -->
+            <div class="white-card side-panel">
+                <div class="side-panel-decor"></div>
+            </div>
 
-</div>
+            <!-- Right Side 2x2 Grid -->
+            <div class="cards-grid">
+
+                <!-- 1. Upload Secure Data -->
+                <div class="white-card data-card">
+                    <div class="card-banner">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Upload Secure Data
+                    </div>
+
+                    <div class="progress-bar"></div>
+                    <div class="progress-text">0% Complete</div>
+
+                    <form action="/upload" method="POST" enctype="multipart/form-data">
+                        <div class="drop-zone">
+                            <i class="fa-solid fa-arrow-up-from-bracket"></i><br>
+                            File-drop Zone
+                            <div class="upload-input-group">
+                                <input type="file" name="file">
+                                <textarea name="data" placeholder="Secure text (optional)"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-upload"><i class="fa-solid fa-lock"></i> Upload &
+                            Secure</button>
+                    </form>
+                </div>
+
+                <!-- 2. View Stored Data -->
+                <div class="white-card data-card">
+                    <div class="card-banner">
+                        <i class="fa-solid fa-database"></i> View Stored Data
+                    </div>
+
+                    <div class="section-label">Recent Files</div>
+                    <ul class="file-list">
+                        {% if recent_files %}
+                        {% for file in recent_files %}
+                        <li>
+                            <span><i class="fa-regular fa-file"></i> {{ file.data[:15] }}...</span>
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </li>
+                        {% endfor %}
+                        {% else %}
+                        <li>
+                            <span><i class="fa-regular fa-file"></i> Documents.lixt</span>
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </li>
+                        <li>
+                            <span><i class="fa-regular fa-file"></i> Documents.ttx</span>
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </li>
+                        <li>
+                            <span><i class="fa-regular fa-file"></i> Document Files</span>
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <a href="/view"
+                            style="color: #6c5ce7; font-weight: bold; text-decoration: none; font-size: 13px;">Manage
+                            All Data &#8594;</a>
+                    </div>
+                </div>
+
+                <!-- 3. Recover Backup Data -->
+                <div class="white-card data-card">
+                    <div class="card-banner">
+                        <i class="fa-solid fa-shield-rotate"></i> Recover Backup Data
+                    </div>
+
+                    <div class="section-label">Backup Point</div>
+                    <form action="/recover" method="GET">
+                        <select name="backup_point" class="dropdown-select">
+                            <option value="latest">Backup Point</option>
+                            <option value="user">User Backup ({{ username }})</option>
+                        </select>
+                        <button type="submit" class="recover-btn">Initialize Recovery</button>
+                    </form>
+                </div>
+
+                <!-- 4. Logout / Session -->
+                <div class="white-card data-card logout-card">
+                    <a href="/logout" class="btn-logout">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                    <div class="session-text">System Session: Active ({{ username }})</div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 
 </body>
+
 </html>
