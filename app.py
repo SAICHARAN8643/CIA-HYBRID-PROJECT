@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, session
 from database import connect_db
 from encryption import encrypt_data, decrypt_data
-from datetime import datetime   # ✅ ADDED
+from datetime import datetime
+import hashlib   # ✅ ADDED FOR PASSWORD HASHING
 
 app = Flask(__name__)
 
@@ -27,10 +28,16 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
+        # ✅ HASH PASSWORD BEFORE CHECK
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
         db = connect_db()
         cursor = db.cursor()
 
-        cursor.execute("SELECT * FROM users WHERE username=%s AND password=%s", (username, password))
+        cursor.execute(
+            "SELECT * FROM users WHERE username=%s AND password=%s",
+            (username, hashed_password)
+        )
         user = cursor.fetchone()
 
         if user:
@@ -51,6 +58,9 @@ def signup():
         username = request.form['username']
         password = request.form['password']
 
+        # ✅ HASH PASSWORD BEFORE STORE
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
         db = connect_db()
         cursor = db.cursor()
 
@@ -62,7 +72,7 @@ def signup():
 
         cursor.execute(
             "INSERT INTO users (username, password) VALUES (%s, %s)",
-            (username, password)
+            (username, hashed_password)
         )
         db.commit()
 
@@ -125,7 +135,7 @@ def upload():
         )
         db.commit()
 
-        # ✅ UPDATED: USER-WISE BACKUP + TIMESTAMP
+        # ✅ USER-WISE BACKUP + TIMESTAMP
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         with open(f"backup_{session['user_id']}.txt", "a") as f:
             f.write(f"[{timestamp}] {encrypted.decode()}\n")
@@ -152,8 +162,6 @@ def view():
     records = cursor.fetchall()
 
     result = []
-
-    import hashlib
 
     for row in records:
         file_id, filename, encrypted_data, stored_hash, user_id = row
