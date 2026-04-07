@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, session
 from database import connect_db
 from encryption import encrypt_data, decrypt_data
+from datetime import datetime   # ✅ ADDED
 
 app = Flask(__name__)
 
@@ -29,7 +30,6 @@ def login():
         db = connect_db()
         cursor = db.cursor()
 
-        # ✅ SIMPLE LOGIN (NO HASH)
         cursor.execute("SELECT * FROM users WHERE username=%s AND password=%s", (username, password))
         user = cursor.fetchone()
 
@@ -60,7 +60,6 @@ def signup():
         if existing_user:
             return "User already exists! Please login."
 
-        # ✅ STORE PLAIN PASSWORD
         cursor.execute(
             "INSERT INTO users (username, password) VALUES (%s, %s)",
             (username, password)
@@ -126,8 +125,10 @@ def upload():
         )
         db.commit()
 
-        with open("backup.txt", "a") as f:
-            f.write(encrypted.decode() + "\n")
+        # ✅ UPDATED: USER-WISE BACKUP + TIMESTAMP
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        with open(f"backup_{session['user_id']}.txt", "a") as f:
+            f.write(f"[{timestamp}] {encrypted.decode()}\n")
 
         log_action(f"User {session['user']} uploaded data")
 
@@ -187,12 +188,12 @@ def recover():
         return redirect('/')
 
     try:
-        with open("backup.txt", "r") as f:
+        with open(f"backup_{session['user_id']}.txt", "r") as f:
             data = f.readlines()
 
-        log_action("Backup data recovered")
+        log_action(f"User {session['user']} recovered backup")
 
-        return "<h2>Recovered Backup Data</h2><br>" + "<br>".join(data)
+        return "<h2>Recovered Backup Data</h2><br><pre>" + "".join(data) + "</pre>"
 
     except:
         return "⚠️ No backup file found!"
