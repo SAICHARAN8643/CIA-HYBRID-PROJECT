@@ -1,161 +1,172 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
-    <link rel="stylesheet" href="/static/style.css">
     <style>
-        body.signup-page {
+        body {
             margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            background: url('/static/images/particle_padlock.png') no-repeat center center fixed;
+            background: url("{{ url_for('static', filename='images/12.jpg') }}") no-repeat center center fixed;
             background-size: cover;
         }
 
-        .signup-card {
-            background: rgba(10, 20, 35, 0.75);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            padding: 45px 40px;
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 35px 30px;
             border-radius: 14px;
-            box-shadow: 0 18px 40px rgba(0, 229, 255, 0.2);
-            max-width: 420px;
             width: 100%;
+            max-width: 350px;
             text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            color: white;
             box-sizing: border-box;
-            margin-left: 20vw;
         }
 
-        @media (max-width: 900px) {
-            body.signup-page {
-                justify-content: center;
-            }
-            .signup-card {
-                margin-left: 0;
+        @media (max-width: 500px) {
+            .container {
+                padding: 30px 20px;
             }
         }
 
-        .signup-card h2 {
+        h2 {
             margin-top: 0;
-            margin-bottom: 20px;
-            color: #00e5ff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 28px;
+            margin-bottom: 25px;
+            font-size: 26px;
+            color: #ffffff;
+            letter-spacing: 1px;
         }
 
-        .signup-card form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        input {
             width: 100%;
-            box-sizing: border-box;
-        }
-
-        .signup-card input[type="text"],
-        .signup-card input[type="password"] {
-            width: 100%;
-            padding: 15px 14px;
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            background: rgba(255, 255, 255, 0.75);
-            color: black;
-            font-weight: bold;
-            border-radius: 9px;
+            padding: 12px;
             margin: 10px 0;
-            font-size: 16px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            font-size: 14px;
             box-sizing: border-box;
-            transition: all 0.25s ease;
-        }
-
-        .signup-card input::placeholder {
-            color: rgba(0, 0, 0, 0.5);
-            font-weight: normal;
-        }
-
-        .signup-card input[type="text"]:focus,
-        .signup-card input[type="password"]:focus {
             outline: none;
+            transition: all 0.3s;
+        }
+
+        input::placeholder {
+            color: #ccc;
+        }
+
+        input:focus {
             border-color: #00e5ff;
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.8);
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
         }
 
-        /* Fix for Browser Autofill */
-        .signup-card input:-webkit-autofill,
-        .signup-card input:-webkit-autofill:hover, 
-        .signup-card input:-webkit-autofill:focus, 
-        .signup-card input:-webkit-autofill:active {
-            -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.85) inset !important;
-            -webkit-text-fill-color: black !important;
-            transition: background-color 5000s ease-in-out 0s;
-        }
-
-        .signup-card button {
-            margin: 20px 0 10px 0;
-            padding: 15px 25px;
-            border: none;
-            border-radius: 25px;
-            background: #00e5ff;
-            color: #001220;
-            font-weight: bold;
-            font-size: 18px;
-            cursor: pointer;
+        button {
             width: 100%;
-            transition: all 0.3s ease;
-            box-sizing: border-box;
+            padding: 12px;
+            margin-top: 15px;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .signup-card button:hover {
-            background: #00b8e6;
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.8);
-            transform: translateY(-2px);
+        button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
         }
 
-        .signup-card a {
+        .footer {
+            margin-top: 25px;
+            font-size: 15px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            color: #ddd;
+        }
+
+        .footer a {
             color: #00e5ff;
             text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-        
-        .signup-card a:hover {
-            color: #00b8e6;
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.7);
+            font-weight: bold;
+            transition: color 0.3s;
         }
 
-        .signup-card .small-text {
-            margin: 15px 0 0 0;
-            color: #ccc;
+        .footer a:hover {
+            color: #00b8e6;
+            text-decoration: underline;
+        }
+
+        .alert-success {
+            background: rgba(0, 255, 204, 0.1);
+            border: 1px solid rgba(0, 255, 204, 0.5);
+            color: #00ffcc;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .alert-error {
+            background: rgba(255, 51, 102, 0.1);
+            border: 1px solid rgba(255, 51, 102, 0.5);
+            color: #ff3366;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 15px;
         }
     </style>
 </head>
-<body class="signup-page">
+<body>
 
-<div class="signup-card">
-    <h2>Create Account</h2>
+    <div class="overlay"></div>
 
-    <form method="POST">
-        <input type="text" name="username" placeholder="Enter Username" required>
-        <input type="password" name="password" placeholder="Enter Password" required>
-        <button type="submit">Signup</button>
-    </form>
+    <div class="container">
+        <form method="POST">
+            <h2>Create Account</h2>
+            
+            {% if success_message %}
+                <div class="alert-success">{{ success_message }}</div>
+            {% endif %}
+            
+            {% if error_message %}
+                <div class="alert-error">{{ error_message }}</div>
+            {% endif %}
 
-    {% if success_message %}
-        <div style="color: #00ffcc; background: rgba(0, 255, 204, 0.1); border: 1px solid rgba(0, 255, 204, 0.4); padding: 12px; border-radius: 8px; margin-top: 15px; font-weight: bold; text-shadow: 0 0 5px rgba(0, 255, 204, 0.5);">
-            {{ success_message }}
+            <input type="text" name="username" placeholder="Create Username" required>
+            <input type="password" name="password" placeholder="Create Password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <div class="footer">
+            <p>Already have an account?</p>
+            <a href="/">Login Here</a>
         </div>
-    {% endif %}
-    {% if error_message %}
-        <div style="color: #ff3366; background: rgba(255, 51, 102, 0.1); border: 1px solid rgba(255, 51, 102, 0.4); padding: 12px; border-radius: 8px; margin-top: 15px; font-weight: bold; text-shadow: 0 0 5px rgba(255, 51, 102, 0.5);">
-            {{ error_message }}
-        </div>
-    {% endif %}
-
-    <p class="small-text">Already have account? <a href="/">Login</a></p>
-</div>
+    </div>
 
 </body>
 </html>

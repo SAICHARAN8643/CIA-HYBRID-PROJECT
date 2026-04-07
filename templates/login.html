@@ -1,155 +1,143 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
-            overflow: hidden;
-            background: url('/static/images/particle_padlock.png') no-repeat center center fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url("{{ url_for('static', filename='images/12.jpg') }}") no-repeat center center fixed;
             background-size: cover;
         }
 
-
-
-
-
-        .container {
-            background: rgba(10, 20, 35, 0.75);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            padding: 40px 35px;
-            border-radius: 14px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 18px 40px rgba(0, 229, 255, 0.2);
-            text-align: center;
-            z-index: 1;
-            margin-left: 25vw;
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 0;
         }
 
-        @media (max-width: 900px) {
-            body {
-                justify-content: center;
-            }
+        .container {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 35px 30px;
+            border-radius: 14px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            color: white;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 500px) {
             .container {
-                margin-left: 0;
+                padding: 30px 20px;
             }
         }
 
         h2 {
-            margin-bottom: 20px;
-            color: #00e5ff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 28px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 26px;
+            color: #ffffff;
+            letter-spacing: 1px;
         }
 
         input {
             width: 100%;
-            padding: 12px 14px;
+            padding: 12px;
             margin: 10px 0;
-            background: rgba(255, 255, 255, 0.75);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            border-radius: 9px;
-            font-size: 16px;
-            color: black;
-            font-weight: bold;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            font-size: 14px;
             box-sizing: border-box;
-            transition: all 0.25s ease;
+            outline: none;
+            transition: all 0.3s;
         }
 
         input::placeholder {
-            color: rgba(0, 0, 0, 0.5);
-            font-weight: normal;
+            color: #ccc;
         }
 
         input:focus {
             border-color: #00e5ff;
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.8);
-            outline: none;
-            background: rgba(255, 255, 255, 0.95);
-        }
-
-        /* Fix for Browser Autofill */
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover, 
-        input:-webkit-autofill:focus, 
-        input:-webkit-autofill:active {
-            -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.85) inset !important;
-            -webkit-text-fill-color: black !important;
-            transition: background-color 5000s ease-in-out 0s;
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
         }
 
         button {
             width: 100%;
-            padding: 12px 25px;
-            margin-top: 20px;
-            background-color: #00e5ff;
-            color: #001220;
-            font-weight: bold;
+            padding: 12px;
+            margin-top: 15px;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            color: white;
             border: none;
-            border-radius: 25px;
+            border-radius: 8px;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         button:hover {
-            background-color: #00b8e6;
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.8);
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
         }
 
         .footer {
-            margin-top: 15px;
+            margin-top: 25px;
+            font-size: 15px;
         }
 
         .footer p {
             margin: 5px 0;
-            color: #ccc;
+            color: #ddd;
         }
 
         .footer a {
-            text-decoration: none;
             color: #00e5ff;
+            text-decoration: none;
             font-weight: bold;
-            transition: color 0.3s ease;
+            transition: color 0.3s;
         }
 
         .footer a:hover {
-            text-decoration: underline;
             color: #00b8e6;
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.7);
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
+    <div class="overlay"></div>
 
+    <div class="container">
+        <form method="POST">
+            <h2>Login</h2>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
 
-
-
-<div class="container">
-    <form method="POST">
-        <h2>Login</h2>
-        
-        <input type="text" name="username" placeholder="Username" required>
-        
-        <input type="password" name="password" placeholder="Password" required>
-        
-        <button type="submit">Login</button>
-    </form>
-
-    <div class="footer">
-        <p>Don't have an account?</p>
-        <a href="/signup">Create New Account</a>
+        <div class="footer">
+            <p>Don't have an account?</p>
+            <a href="/signup">Create New Account</a>
+        </div>
     </div>
-</div>
 
 </body>
 </html>
