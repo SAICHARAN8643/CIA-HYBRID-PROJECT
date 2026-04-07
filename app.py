@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, flash
 from database import connect_db
 from encryption import encrypt_data, decrypt_data
 from datetime import datetime
@@ -129,14 +129,16 @@ def upload():
             file.seek(0)
 
             if size > 2 * 1024 * 1024:
-                return "❌ File too large! Max 2MB allowed"
+                flash("❌ File too large! Max 2MB allowed", "error")
+                return redirect('/dashboard')
 
             file_data = file.read()
             file_text = file_data.hex()
             combined_data += "\n" + file_text
 
         if combined_data.strip() == "":
-            return "⚠️ Please enter text or upload file"
+            flash("⚠️ Please enter text or upload file", "error")
+            return redirect('/dashboard')
 
         encrypted, hash_value = encrypt_data(combined_data)
 
@@ -158,7 +160,8 @@ def upload():
 
         log_action(f"User {session['user']} uploaded data")
 
-        return "✅ Data Stored Securely!"
+        flash("✅ Data Stored Securely!", "success")
+        return redirect('/dashboard')
 
     return render_template('upload.html')
 
